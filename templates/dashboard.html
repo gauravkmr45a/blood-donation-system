@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Welcome, {{ user.name }}</h2>
+        <p><strong>Role:</strong> {{ user.role.capitalize() }}</p>
+        <p><strong>Blood Group:</strong> {{ user.blood_group }}</p>
+        <p><strong>City:</strong> {{ user.city }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Age:</strong> {{ user.age }}</p>
+        <p><strong>Gender:</strong> {{ user.gender }}</p>
+
+        | <a href="/logout">Logout</a>
+    </div>
+
+    <div class="form-box">
+        <h3>Search Donors by Blood Group</h3>
+        <form method="POST" action="/search">
+            <label for="blood_group">Select Blood Group:</label>
+            <select name="blood_group" required>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if results %}
+            <h4>Matching Donors:</h4>
+            <ul>
+                {% for donor in results %}
+                    <li>{{ donor.name }} - {{ donor.city }} - {{ donor.phone }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <div class="form-box">
+        <h3>Blood Group Statistics</h3>
+        <canvas id="bloodChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('bloodChart');
+        const chartData = {{ chart_data|safe }};
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Number of Users',
+                    data: chartData.values,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

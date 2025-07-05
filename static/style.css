@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f8d7da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+.form-box h2 {
+    text-align: center;
+    color: #b30000;
+}
+.form-box input, .form-box select, .form-box button {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.form-box button {
+    background-color: #b30000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.form-box a {
+    color: #b30000;
+    text-decoration: none;
+}
